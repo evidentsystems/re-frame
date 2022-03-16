@@ -10,7 +10,6 @@
                                org.clojure/google-closure-library
                                org.clojure/google-closure-library-third-party]]
                  [thheller/shadow-cljs      "2.15.12"   :scope "provided"]
-                 [reagent                   "1.0.0"]
                  [net.cgrand/macrovich      "0.2.1"]
                  [org.clojure/tools.logging "1.1.0"]]
 
@@ -56,8 +55,9 @@
                          {:target           :browser-test
                           :ns-regexp        "re-frame\\..*-test$"
                           :test-dir         "run/compiled/browser/test"
-                          :compiler-options {:pretty-print                       true
-                                             :external-config                    {:devtools/config {:features-to-install [:formatters :hints]}}}
+                          :js-options       {:entry-keys ["module" "browser" "main"]}
+                          :compiler-options {:pretty-print    true
+                                             :external-config {:devtools/config {:features-to-install [:formatters :hints]}}}
                           :devtools         {:http-port 3449
                                              :http-root "run/compiled/browser/test"
                                              :preloads  [devtools.preload]}}
@@ -66,8 +66,9 @@
                          {:target           :karma
                           :ns-regexp        "re-frame\\..*-test$"
                           :output-to        "run/compiled/karma/test/test.js"
-                          :compiler-options {:pretty-print                       true
-                                             :closure-defines                    {re-frame.trace.trace-enabled? true}}}}}
+                          :js-options       {:entry-keys ["module" "browser" "main"]}
+                          :compiler-options {:pretty-print    true
+                                             :closure-defines {re-frame.trace.trace-enabled? true}}}}}
 
   :aliases {"watch" ["do"
                      ["clean"]

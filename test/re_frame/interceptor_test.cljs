@@ -1,6 +1,6 @@
 (ns re-frame.interceptor-test
   (:require [cljs.test :refer-macros [is deftest testing use-fixtures]]
-            [reagent.ratom :refer [atom]]
+            [re-frame.reactive :refer [atom]]
             [re-frame.interceptor :refer [context get-coeffect assoc-effect assoc-coeffect get-effect update-coeffect update-effect ->interceptor]]
             [re-frame.std-interceptors :refer [debug trim-v path enrich after on-changes
                                                db-handler->interceptor fx-handler->interceptor inject-global-interceptors]]

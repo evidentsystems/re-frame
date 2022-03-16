@@ -56,7 +56,7 @@
 ;;     See "-fsm-trigger" (below) for the states and transitions.
 ;;   - the scheduling is done via "goog.async.nextTick" which is pretty quick
 ;;   - when the event has :flush-dom metadata we schedule via
-;;       "reagent.core.after-render"
+;;       "re-frame.reactive/after-render"
 ;;     which will run event processing after the next Reagent animation frame.
 ;;
 

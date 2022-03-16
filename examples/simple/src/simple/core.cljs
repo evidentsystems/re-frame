@@ -1,7 +1,7 @@
 (ns simple.core
-  (:require [reagent.dom]
-            [re-frame.core :as rf]
-            [clojure.string :as str]))
+  (:require [re-frame.core :as rf]
+            [clojure.string :as str]
+            ["solid-js/web" :as solid]))
 
 ;; A detailed walk-through of this source code is provided in the docs:
 ;; https://day8.github.io/re-frame/dominoes-live/
@@ -57,20 +57,23 @@
 
 (defn clock
   []
-  [:div.example-clock
-   {:style {:color @(rf/subscribe [:time-color])}}
-   (-> @(rf/subscribe [:time])
-       .toTimeString
-       (str/split " ")
-       first)])
+  (let [time-color (rf/subscribe [:time-color])
+        time       (rf/subscribe [:time])]
+    [:div.example-clock
+     {:style (fn [] #js {:color @time-color})}
+     #(-> @time
+          .toTimeString
+          (str/split " ")
+          first)]))
 
 (defn color-input
   []
-  [:div.color-input
-   "Time color: "
-   [:input {:type "text"
-            :value @(rf/subscribe [:time-color])
-            :on-change #(rf/dispatch [:time-color-change (-> % .-target .-value)])}]])  ;; <---
+  (let [time-color (rf/subscribe [:time-color])]
+    [:div.color-input
+     "Time color: "
+     [:input {:type     "text"
+              :value    #(time-color)
+              :onChange #(rf/dispatch [:time-color-change (-> % .-target .-value)])}]]))  ;; <---
 
 (defn ui
   []
@@ -83,8 +86,7 @@
 
 (defn render
   []
-  (reagent.dom/render [ui]
-                      (js/document.getElementById "app")))
+  (rf/render ui (js/document.getElementById "app")))
 
 (defn ^:dev/after-load clear-cache-and-render!
   []

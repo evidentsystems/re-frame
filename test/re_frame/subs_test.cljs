@@ -1,6 +1,6 @@
 (ns re-frame.subs-test
   (:require [cljs.test         :as test :refer-macros [is deftest testing]]
-            [reagent.ratom     :as r :refer-macros [reaction]]
+            [re-frame.reactive :as r :refer-macros [reaction]]
             [re-frame.subs     :as subs]
             [re-frame.db       :as db]
             [re-frame.core     :as re-frame]))

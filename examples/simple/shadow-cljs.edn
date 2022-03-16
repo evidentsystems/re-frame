@@ -10,7 +10,8 @@
  [[reagent                   "1.1.0"]
   [net.cgrand/macrovich      "0.2.1"]
   [org.clojure/tools.logging "1.1.0"]
-  [day8/shadow-git-inject    "0.0.5"]]
+  [day8/shadow-git-inject    "0.0.5"]
+  [binaryage/devtools "1.0.3"]]
 
  :build-defaults
  {:build-hooks [(shadow-git-inject.core/hook)]}
@@ -22,6 +23,7 @@
  {:client
   {:target     :browser
    :output-dir "resources/public/js"
+   :js-options {:entry-keys ["module" "browser" "main"]}
    :modules
    {:client
     {:init-fn simple.core/run}}}}}

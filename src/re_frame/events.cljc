@@ -1,7 +1,7 @@
 (ns re-frame.events
   (:require [re-frame.db          :refer [app-db]]
             [re-frame.utils       :refer [first-in-vector]]
-            [re-frame.interop     :refer [empty-queue debug-enabled?]]
+            [re-frame.interop     :refer [debug-enabled?]]
             [re-frame.registrar   :refer [get-handler register-handler]]
             [re-frame.loggers     :refer [console]]
             [re-frame.interceptor :as  interceptor]

@@ -1,8 +1,7 @@
 (ns re-frame.interop
   (:require [goog.async.nextTick]
             [goog.events :as events]
-            [reagent.core]
-            [reagent.ratom]))
+            [re-frame.reactive :as reactive]))
 
 (defn on-load
       [listener]
@@ -15,7 +14,7 @@
 
 (def empty-queue #queue [])
 
-(def after-render reagent.core/after-render)
+(def after-render (.-requestAnimationFrame js/window))
 
 ;; Make sure the Google Closure compiler sees this as a boolean constant,
 ;; otherwise Dead Code Elimination won't happen in `:advanced` builds.
@@ -24,27 +23,26 @@
 (def ^boolean debug-enabled? "@define {boolean}" ^boolean goog/DEBUG)
 
 (defn ratom [x]
-  (reagent.core/atom x))
+  (reactive/atom x))
 
 (defn ratom? [x]
   ;; ^:js suppresses externs inference warnings by forcing the compiler to
   ;; generate proper externs. Although not strictly required as
-  ;; reagent.ratom/IReactiveAtom is not JS interop it appears to be harmless.
+  ;; re-frame.reactive/IReactiveAtom is not JS interop it appears to be harmless.
   ;; See https://shadow-cljs.github.io/docs/UsersGuide.html#infer-externs
-  (satisfies? reagent.ratom/IReactiveAtom ^js x))
+  (satisfies? reactive/IReactiveAtom ^js x))
 
 (defn deref? [x]
   (satisfies? IDeref x))
 
-
 (defn make-reaction [f]
-  (reagent.ratom/make-reaction f))
+  (reactive/make-reaction f))
 
 (defn add-on-dispose! [a-ratom f]
-  (reagent.ratom/add-on-dispose! a-ratom f))
+  (reactive/add-on-dispose! a-ratom f))
 
 (defn dispose! [a-ratom]
-  (reagent.ratom/dispose! a-ratom))
+  (reactive/dispose! a-ratom))
 
 (defn set-timeout! [f ms]
   (js/setTimeout f ms))
@@ -62,17 +60,15 @@
   [reactive-val]
   ;; ^:js suppresses externs inference warnings by forcing the compiler to
   ;; generate proper externs. Although not strictly required as
-  ;; reagent.ratom/IReactiveAtom is not JS interop it appears to be harmless.
+  ;; reactive/IReactiveAtom is not JS interop it appears to be harmless.
   ;; See https://shadow-cljs.github.io/docs/UsersGuide.html#infer-externs
-  (when (implements? reagent.ratom/IReactiveAtom ^js reactive-val)
+  (when (implements? reactive/IReactiveAtom ^js reactive-val)
     (str (condp instance? reactive-val
-           reagent.ratom/RAtom "ra"
-           reagent.ratom/RCursor "rc"
-           reagent.ratom/Reaction "rx"
-           reagent.ratom/Track "tr"
+           reactive/SolidRatom "ra"
+           reactive/SolidReaction "re"
            "other")
          (hash reactive-val))))
 
 (defn reactive?
   []
-  (reagent.ratom/reactive?))
+  (reactive/reactive?))

@@ -1,5 +1,6 @@
 (ns re-frame.core
   (:require
+    [re-frame.views            :as views]
     [re-frame.events           :as events]
     [re-frame.subs             :as subs]
     [re-frame.interop          :as interop]
@@ -17,6 +18,12 @@
     [re-frame.utils            :as utils]
     [clojure.set               :as set]))
 
+;; -- render ------------------------------------------------------------------
+
+(defn render
+  "Renders the given ClojureScript component into the given DOM element."
+  [component element]
+  (views/render component element))
 
 ;; -- dispatch ----------------------------------------------------------------
 

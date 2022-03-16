@@ -1,3 +1,5 @@
+process.env.CHROME_BIN = require('puppeteer').executablePath()
+
 module.exports = function (config) {
   var root = 'run/compiled/karma/test' // same as :output-dir
   var junitOutputDir = process.env.CIRCLE_TEST_REPORTS || "run/compiled/karma/test/junit"
