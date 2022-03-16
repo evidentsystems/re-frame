@@ -7,8 +7,7 @@
  ;; depending on a re-frame artifact we add the re-frame source
  ;; from this repository directly to the :source-paths.
  :dependencies
- [[reagent                    "1.1.0"]
-  [net.cgrand/macrovich       "0.2.1"]
+ [[net.cgrand/macrovich       "0.2.1"]
   [org.clojure/tools.logging  "1.1.0"]
   [binaryage/devtools         "1.0.4"]
   [clj-commons/secretary      "1.2.4"]
@@ -26,6 +25,7 @@
  {:client
   {:target     :browser
    :output-dir "resources/public/js"
+   :js-options {:entry-keys ["module" "browser" "main"]}
    :modules
    {:client
     {:init-fn todomvc.core/main}}
