@@ -20,7 +20,7 @@
 (defn first-in-vector
   [v]
   (if (vector? v)
-    (first v)
+    (nth v 0)
     (console :error "re-frame: expected a vector, but got:" v)))
 
 (defn apply-kw
