@@ -32,3 +32,5 @@ build/
 /.shadow-cljs/
 /site/
 .cpcache
+/.clj-kondo/
+/.lsp/
